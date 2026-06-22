@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="work-mode">
+  <main class="app">
+    <h1>Pomodoro Timer</h1>
+
+    <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
+    <p id="timer" aria-live="polite">25:00</p>
+
+    <div class="controls" aria-label="Timer controls">
+      <button id="startButton" type="button">Start</button>
+      <button id="pauseButton" type="button">Pause</button>
+      <button id="resetButton" type="button">Reset</button>
+    </div>
+
+    <p class="session-count">Completed sessions: <span id="sessionCount">0</span></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
