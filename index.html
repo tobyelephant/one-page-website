@@ -4,140 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pomodoro Timer</title>
-
-  <style>
-    body {
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      color: #222;
-    }
-
-    main {
-      text-align: center;
-      padding: 2rem;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-
-    p {
-      margin: 1rem 0;
-    }
-
-    #timer {
-      margin: 1.5rem 0;
-      font-size: 4rem;
-      font-weight: bold;
-    }
-
-    button {
-      margin: 0.25rem;
-      padding: 0.6rem 1rem;
-      border: 1px solid #999;
-      border-radius: 4px;
-      background: #f0f0f0;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background: #e4e4e4;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <main>
+<body class="work-mode">
+  <main class="app">
     <h1>Pomodoro Timer</h1>
 
-    <p>Current mode: <span id="mode">Work Session</span></p>
+    <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
     <p id="timer" aria-live="polite">25:00</p>
 
-    <button id="startButton" type="button">Start</button>
-    <button id="pauseButton" type="button">Pause</button>
-    <button id="resetButton" type="button">Reset</button>
+    <div class="controls" aria-label="Timer controls">
+      <button id="startButton" type="button">Start</button>
+      <button id="pauseButton" type="button">Pause</button>
+      <button id="resetButton" type="button">Reset</button>
+    </div>
 
-    <p>Completed sessions: <span id="sessionCount">0</span></p>
+    <p class="session-count">Completed sessions: <span id="sessionCount">0</span></p>
   </main>
 
-  <script>
-    const workTime = 25 * 60;
-    const breakTime = 5 * 60;
-
-    let mode = 'Work Session';
-    let timeLeft = workTime;
-    let completedSessions = 0;
-    let timerId = null;
-
-    const modeElement = document.getElementById('mode');
-    const timerElement = document.getElementById('timer');
-    const sessionCountElement = document.getElementById('sessionCount');
-    const startButton = document.getElementById('startButton');
-    const pauseButton = document.getElementById('pauseButton');
-    const resetButton = document.getElementById('resetButton');
-
-    function updateDisplay() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-
-      modeElement.textContent = mode;
-      timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-      sessionCountElement.textContent = completedSessions;
-    }
-
-    function switchMode() {
-      if (mode === 'Work Session') {
-        completedSessions += 1;
-        mode = 'Break';
-        timeLeft = breakTime;
-      } else {
-        mode = 'Work Session';
-        timeLeft = workTime;
-      }
-
-      updateDisplay();
-    }
-
-    function startTimer() {
-      if (timerId !== null) {
-        return;
-      }
-
-      timerId = setInterval(function () {
-        if (timeLeft > 0) {
-          timeLeft -= 1;
-          updateDisplay();
-        } else {
-          switchMode();
-        }
-      }, 1000);
-    }
-
-    function pauseTimer() {
-      clearInterval(timerId);
-      timerId = null;
-    }
-
-    function resetTimer() {
-      pauseTimer();
-      mode = 'Work Session';
-      timeLeft = workTime;
-      updateDisplay();
-    }
-
-    startButton.addEventListener('click', startTimer);
-    pauseButton.addEventListener('click', pauseTimer);
-    resetButton.addEventListener('click', resetTimer);
-
-    updateDisplay();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
