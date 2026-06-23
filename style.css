@@ -123,3 +123,32 @@ button:focus-visible {
     width: 100%;
   }
 }
+
+.settings {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.settings label {
+  font-weight: bold;
+}
+
+.settings input {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #d7b8aa;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.settings input:focus {
+  outline: 3px solid #f5b7a9;
+  outline-offset: 2px;
+}
+
+#applySettingsButton {
+  width: 100%;
+  margin-top: 0.5rem;
+}

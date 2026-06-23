@@ -13,6 +13,16 @@
     <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
     <p id="timer" aria-live="polite">25:00</p>
 
+    <section class="settings" aria-label="Timer settings">
+      <label for="workDuration">Work duration in minutes</label>
+      <input id="workDuration" type="number" min="1" step="1" value="25">
+
+      <label for="breakDuration">Break duration in minutes</label>
+      <input id="breakDuration" type="number" min="1" step="1" value="5">
+
+      <button id="applySettingsButton" type="button">Apply Settings</button>
+    </section>
+
     <div class="controls" aria-label="Timer controls">
       <button id="startButton" type="button">Start</button>
       <button id="pauseButton" type="button">Pause</button>

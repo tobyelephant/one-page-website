@@ -1,5 +1,5 @@
-const workTime = 25 * 60;
-const breakTime = 5 * 60;
+let workTime = 25 * 60;
+let breakTime = 5 * 60;
 
 let mode = 'Work Session';
 let timeLeft = workTime;
@@ -12,6 +12,9 @@ const sessionCountElement = document.getElementById('sessionCount');
 const startButton = document.getElementById('startButton');
 const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
+const workDurationInput = document.getElementById('workDuration');
+const breakDurationInput = document.getElementById('breakDuration');
+const applySettingsButton = document.getElementById('applySettingsButton');
 
 function updateModeStyle() {
   if (mode === 'Work Session') {
@@ -79,8 +82,25 @@ function resetTimer() {
   updateDisplay();
 }
 
+function applySettings() {
+  const newWorkMinutes = Number(workDurationInput.value);
+  const newBreakMinutes = Number(breakDurationInput.value);
+
+  if (!Number.isFinite(newWorkMinutes) || !Number.isFinite(newBreakMinutes) || newWorkMinutes <= 0 || newBreakMinutes <= 0) {
+    alert('Please enter numbers greater than 0.');
+    workDurationInput.value = String(workTime / 60);
+    breakDurationInput.value = String(breakTime / 60);
+    return;
+  }
+
+  workTime = newWorkMinutes * 60;
+  breakTime = newBreakMinutes * 60;
+  resetTimer();
+}
+
 startButton.addEventListener('click', startTimer);
 pauseButton.addEventListener('click', pauseTimer);
 resetButton.addEventListener('click', resetTimer);
+applySettingsButton.addEventListener('click', applySettings);
 
 updateDisplay();
