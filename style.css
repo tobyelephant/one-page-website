@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  color: #3b2f2f;
+  background: #f8efe6;
+}
+
+body.work-mode {
+  background: #f8efe6;
+}
+
+body.break-mode {
+  background: #e8f4ee;
+}
+
+.app {
+  width: min(100%, 420px);
+  padding: 2rem;
+  text-align: center;
+  background: #fffaf6;
+  border: 2px solid #f0d6c8;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(112, 67, 54, 0.12);
+}
+
+.break-mode .app {
+  background: #f7fffa;
+  border-color: #c7e7d2;
+  box-shadow: 0 12px 30px rgba(48, 103, 76, 0.12);
+}
+
+h1 {
+  margin: 0 0 1rem;
+  color: #9f3f34;
+}
+
+.break-mode h1 {
+  color: #2f7d55;
+}
+
+.mode-label,
+.session-count {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+#mode {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  color: #8b3329;
+  background: #fde2d9;
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+.break-mode #mode {
+  color: #256645;
+  background: #d8f1df;
+}
+
+#timer {
+  margin: 1.5rem 0;
+  font-size: clamp(3.5rem, 16vw, 5.5rem);
+  font-weight: bold;
+  line-height: 1;
+  color: #2e2525;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+button {
+  min-width: 90px;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: #c84b3a;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #a83d30;
+  transform: translateY(-2px);
+}
+
+button:focus-visible {
+  outline: 3px solid #f5b7a9;
+  outline-offset: 3px;
+}
+
+.break-mode button {
+  background: #3c9b6a;
+}
+
+.break-mode button:hover {
+  background: #2f7d55;
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.settings {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.settings label {
+  font-weight: bold;
+}
+
+.settings input {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #d7b8aa;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.settings input:focus {
+  outline: 3px solid #f5b7a9;
+  outline-offset: 2px;
+}
+
+#applySettingsButton {
+  width: 100%;
+  margin-top: 0.5rem;
+}
