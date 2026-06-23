@@ -52,11 +52,12 @@ function startTimer() {
   }
 
   timerId = setInterval(function () {
-    if (timeLeft > 0) {
-      timeLeft -= 1;
-      updateDisplay();
-    } else {
+    timeLeft -= 1;
+
+    if (timeLeft === 0) {
       switchMode();
+    } else {
+      updateDisplay();
     }
   }, 1000);
 }
@@ -68,8 +69,13 @@ function pauseTimer() {
 
 function resetTimer() {
   pauseTimer();
-  mode = 'Work Session';
-  timeLeft = workTime;
+
+  if (mode === 'Work Session') {
+    timeLeft = workTime;
+  } else {
+    timeLeft = breakTime;
+  }
+
   updateDisplay();
 }
 
