@@ -1,5 +1,16 @@
-let workTime = 25 * 60;
-let breakTime = 5 * 60;
+const presets = {
+  classic: {
+    work: 25 * 60,
+    break: 5 * 60,
+  },
+  deepFocus: {
+    work: 50 * 60,
+    break: 10 * 60,
+  },
+};
+
+let workTime = presets.classic.work;
+let breakTime = presets.classic.break;
 
 let mode = 'Work Session';
 let timeLeft = workTime;
@@ -8,14 +19,13 @@ let timerId = null;
 
 const modeElement = document.getElementById('mode');
 const timerElement = document.getElementById('timer');
+const progressBar = document.getElementById('progressBar');
 const sessionCountElement = document.getElementById('sessionCount');
 const startButton = document.getElementById('startButton');
 const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
-const workDurationInput = document.getElementById('workDuration');
-const breakDurationInput = document.getElementById('breakDuration');
+const presetSelect = document.getElementById('presetSelect');
 const soundSelect = document.getElementById('soundSelect');
-const applySettingsButton = document.getElementById('applySettingsButton');
 
 const backgroundSounds = {
   ocean: 'audio/ocean.mp3',
@@ -24,6 +34,14 @@ const backgroundSounds = {
 };
 
 let backgroundAudio = null;
+
+function getCurrentSessionLength() {
+  if (mode === 'Work Session') {
+    return workTime;
+  }
+
+  return breakTime;
+}
 
 function updateModeStyle() {
   if (mode === 'Work Session') {
@@ -35,6 +53,14 @@ function updateModeStyle() {
   }
 }
 
+function updateProgressBar() {
+  const sessionLength = getCurrentSessionLength();
+  const elapsedTime = sessionLength - timeLeft;
+  const progressPercent = (elapsedTime / sessionLength) * 100;
+
+  progressBar.style.width = `${progressPercent}%`;
+}
+
 function updateDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -42,6 +68,7 @@ function updateDisplay() {
   modeElement.textContent = mode;
   timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
   sessionCountElement.textContent = completedSessions;
+  updateProgressBar();
   updateModeStyle();
 }
 
@@ -149,26 +176,21 @@ function resetTimer() {
   updateDisplay();
 }
 
-function applySettings() {
-  const newWorkMinutes = Number(workDurationInput.value);
-  const newBreakMinutes = Number(breakDurationInput.value);
+function changePreset() {
+  const selectedPreset = presets[presetSelect.value];
 
-  if (!Number.isFinite(newWorkMinutes) || !Number.isFinite(newBreakMinutes) || newWorkMinutes <= 0 || newBreakMinutes <= 0) {
-    alert('Please enter numbers greater than 0.');
-    workDurationInput.value = String(workTime / 60);
-    breakDurationInput.value = String(breakTime / 60);
-    return;
-  }
-
-  workTime = newWorkMinutes * 60;
-  breakTime = newBreakMinutes * 60;
-  resetTimer();
+  pauseTimer();
+  workTime = selectedPreset.work;
+  breakTime = selectedPreset.break;
+  mode = 'Work Session';
+  timeLeft = workTime;
+  updateDisplay();
 }
 
 startButton.addEventListener('click', startTimer);
 pauseButton.addEventListener('click', pauseTimer);
 resetButton.addEventListener('click', resetTimer);
+presetSelect.addEventListener('change', changePreset);
 soundSelect.addEventListener('change', changeBackgroundSound);
-applySettingsButton.addEventListener('click', applySettings);
 
 updateDisplay();

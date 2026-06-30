@@ -13,12 +13,16 @@
     <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
     <p id="timer" aria-live="polite">25:00</p>
 
-    <section class="settings" aria-label="Timer settings">
-      <label for="workDuration">Work duration in minutes</label>
-      <input id="workDuration" type="number" min="1" step="1" value="25">
+    <div class="progress" aria-label="Session progress">
+      <div id="progressBar"></div>
+    </div>
 
-      <label for="breakDuration">Break duration in minutes</label>
-      <input id="breakDuration" type="number" min="1" step="1" value="5">
+    <section class="settings" aria-label="Timer settings">
+      <label for="presetSelect">Timer preset</label>
+      <select id="presetSelect">
+        <option value="classic">Classic (25 / 5)</option>
+        <option value="deepFocus">Deep Focus (50 / 10)</option>
+      </select>
 
       <label for="soundSelect">Background sound</label>
       <select id="soundSelect">
@@ -27,8 +31,6 @@
         <option value="forest">Forest</option>
         <option value="rain">Rain</option>
       </select>
-
-      <button id="applySettingsButton" type="button">Apply Settings</button>
     </section>
 
     <div class="controls" aria-label="Timer controls">
