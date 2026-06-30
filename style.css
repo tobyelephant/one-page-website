@@ -135,7 +135,8 @@ button:focus-visible {
   font-weight: bold;
 }
 
-.settings input {
+.settings input,
+.settings select {
   width: 100%;
   padding: 0.65rem;
   border: 1px solid #d7b8aa;
@@ -143,7 +144,8 @@ button:focus-visible {
   font-size: 1rem;
 }
 
-.settings input:focus {
+.settings input:focus,
+.settings select:focus {
   outline: 3px solid #f5b7a9;
   outline-offset: 2px;
 }

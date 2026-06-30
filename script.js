@@ -14,7 +14,16 @@ const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
 const workDurationInput = document.getElementById('workDuration');
 const breakDurationInput = document.getElementById('breakDuration');
+const soundSelect = document.getElementById('soundSelect');
 const applySettingsButton = document.getElementById('applySettingsButton');
+
+const backgroundSounds = {
+  ocean: 'audio/ocean.mp3',
+  forest: 'audio/forest.mp3',
+  rain: 'audio/rain.mp3',
+};
+
+let backgroundAudio = null;
 
 function updateModeStyle() {
   if (mode === 'Work Session') {
@@ -36,6 +45,59 @@ function updateDisplay() {
   updateModeStyle();
 }
 
+// Create a new background audio track for the selected sound.
+function loadBackgroundSound() {
+  const selectedSound = soundSelect.value;
+
+  if (selectedSound === 'none') {
+    backgroundAudio = null;
+    return;
+  }
+
+  backgroundAudio = new Audio(backgroundSounds[selectedSound]);
+  backgroundAudio.loop = true;
+}
+
+// Start the selected background sound while the timer is running.
+function playBackgroundSound() {
+  if (soundSelect.value === 'none') {
+    return;
+  }
+
+  if (backgroundAudio === null) {
+    loadBackgroundSound();
+  }
+
+  backgroundAudio.play().catch(function () {
+    // Browsers can block audio until the user interacts with the page.
+  });
+}
+
+// Pause the background sound without losing its current place.
+function pauseBackgroundSound() {
+  if (backgroundAudio !== null) {
+    backgroundAudio.pause();
+  }
+}
+
+// Stop the background sound and rewind it to the beginning.
+function stopBackgroundSound() {
+  if (backgroundAudio !== null) {
+    backgroundAudio.pause();
+    backgroundAudio.currentTime = 0;
+  }
+}
+
+// If the timer is running, changing the selected sound starts the new sound right away.
+function changeBackgroundSound() {
+  stopBackgroundSound();
+  loadBackgroundSound();
+
+  if (timerId !== null) {
+    playBackgroundSound();
+  }
+}
+
 function switchMode() {
   if (mode === 'Work Session') {
     completedSessions += 1;
@@ -51,8 +113,11 @@ function switchMode() {
 
 function startTimer() {
   if (timerId !== null) {
+    playBackgroundSound();
     return;
   }
+
+  playBackgroundSound();
 
   timerId = setInterval(function () {
     timeLeft -= 1;
@@ -68,10 +133,12 @@ function startTimer() {
 function pauseTimer() {
   clearInterval(timerId);
   timerId = null;
+  pauseBackgroundSound();
 }
 
 function resetTimer() {
   pauseTimer();
+  stopBackgroundSound();
 
   if (mode === 'Work Session') {
     timeLeft = workTime;
@@ -101,6 +168,7 @@ function applySettings() {
 startButton.addEventListener('click', startTimer);
 pauseButton.addEventListener('click', pauseTimer);
 resetButton.addEventListener('click', resetTimer);
+soundSelect.addEventListener('change', changeBackgroundSound);
 applySettingsButton.addEventListener('click', applySettings);
 
 updateDisplay();
