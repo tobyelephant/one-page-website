@@ -24,8 +24,8 @@ const sessionCountElement = document.getElementById('sessionCount');
 const startButton = document.getElementById('startButton');
 const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
-const presetSelect = document.getElementById('presetSelect');
-const soundSelect = document.getElementById('soundSelect');
+const presetButtons = document.querySelectorAll('[data-preset]');
+const soundButtons = document.querySelectorAll('[data-sound]');
 
 const backgroundSounds = {
   ocean: 'audio/ocean.mp3',
@@ -33,6 +33,8 @@ const backgroundSounds = {
   rain: 'audio/rain.mp3',
 };
 
+let selectedPreset = 'classic';
+let selectedSound = 'none';
 let backgroundAudio = null;
 
 function getCurrentSessionLength() {
@@ -51,6 +53,21 @@ function updateModeStyle() {
     document.body.classList.add('break-mode');
     document.body.classList.remove('work-mode');
   }
+}
+
+// Update which preset and sound buttons look selected.
+function updateActiveButtons() {
+  presetButtons.forEach(function (button) {
+    const isSelected = button.dataset.preset === selectedPreset;
+    button.classList.toggle('active', isSelected);
+    button.setAttribute('aria-pressed', String(isSelected));
+  });
+
+  soundButtons.forEach(function (button) {
+    const isSelected = button.dataset.sound === selectedSound;
+    button.classList.toggle('active', isSelected);
+    button.setAttribute('aria-pressed', String(isSelected));
+  });
 }
 
 function updateProgressBar() {
@@ -74,8 +91,6 @@ function updateDisplay() {
 
 // Create a new background audio track for the selected sound.
 function loadBackgroundSound() {
-  const selectedSound = soundSelect.value;
-
   if (selectedSound === 'none') {
     backgroundAudio = null;
     return;
@@ -87,7 +102,7 @@ function loadBackgroundSound() {
 
 // Start the selected background sound while the timer is running.
 function playBackgroundSound() {
-  if (soundSelect.value === 'none') {
+  if (selectedSound === 'none') {
     return;
   }
 
@@ -116,7 +131,9 @@ function stopBackgroundSound() {
 }
 
 // If the timer is running, changing the selected sound starts the new sound right away.
-function changeBackgroundSound() {
+function changeBackgroundSound(soundName) {
+  selectedSound = soundName;
+  updateActiveButtons();
   stopBackgroundSound();
   loadBackgroundSound();
 
@@ -176,21 +193,32 @@ function resetTimer() {
   updateDisplay();
 }
 
-function changePreset() {
-  const selectedPreset = presets[presetSelect.value];
-
+function changePreset(presetName) {
+  selectedPreset = presetName;
   pauseTimer();
-  workTime = selectedPreset.work;
-  breakTime = selectedPreset.break;
+  workTime = presets[selectedPreset].work;
+  breakTime = presets[selectedPreset].break;
   mode = 'Work Session';
   timeLeft = workTime;
+  updateActiveButtons();
   updateDisplay();
 }
 
 startButton.addEventListener('click', startTimer);
 pauseButton.addEventListener('click', pauseTimer);
 resetButton.addEventListener('click', resetTimer);
-presetSelect.addEventListener('change', changePreset);
-soundSelect.addEventListener('change', changeBackgroundSound);
 
+presetButtons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    changePreset(button.dataset.preset);
+  });
+});
+
+soundButtons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    changeBackgroundSound(button.dataset.sound);
+  });
+});
+
+updateActiveButtons();
 updateDisplay();

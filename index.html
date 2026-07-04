@@ -18,25 +18,29 @@
     </div>
 
     <section class="settings" aria-label="Timer settings">
-      <label for="presetSelect">Timer preset</label>
-      <select id="presetSelect">
-        <option value="classic">Classic (25 / 5)</option>
-        <option value="deepFocus">Deep Focus (50 / 10)</option>
-      </select>
+      <div class="setting-group">
+        <p class="setting-title">Timer preset</p>
+        <div class="choice-grid" aria-label="Timer preset choices">
+          <button class="choice-button active" type="button" data-preset="classic" aria-pressed="true">Classic <span>25 / 5</span></button>
+          <button class="choice-button" type="button" data-preset="deepFocus" aria-pressed="false">Deep Focus <span>50 / 10</span></button>
+        </div>
+      </div>
 
-      <label for="soundSelect">Background sound</label>
-      <select id="soundSelect">
-        <option value="none">No Sound</option>
-        <option value="ocean">Ocean</option>
-        <option value="forest">Forest</option>
-        <option value="rain">Rain</option>
-      </select>
+      <div class="setting-group">
+        <p class="setting-title">Background sound</p>
+        <div class="sound-grid" aria-label="Background sound choices">
+          <button class="sound-button active" type="button" data-sound="none" aria-pressed="true">No Sound</button>
+          <button class="sound-button" type="button" data-sound="ocean" aria-pressed="false">Ocean</button>
+          <button class="sound-button" type="button" data-sound="forest" aria-pressed="false">Forest</button>
+          <button class="sound-button" type="button" data-sound="rain" aria-pressed="false">Rain</button>
+        </div>
+      </div>
     </section>
 
     <div class="controls" aria-label="Timer controls">
-      <button id="startButton" type="button">Start</button>
-      <button id="pauseButton" type="button">Pause</button>
-      <button id="resetButton" type="button">Reset</button>
+      <button class="action-button" id="startButton" type="button">Start</button>
+      <button class="action-button" id="pauseButton" type="button">Pause</button>
+      <button class="action-button" id="resetButton" type="button">Reset</button>
     </div>
 
     <p class="session-count">Completed sessions: <span id="sessionCount">0</span></p>
