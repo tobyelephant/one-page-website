@@ -37,6 +37,9 @@ let selectedPreset = 'classic';
 let selectedSound = 'none';
 let backgroundAudio = null;
 
+const startSound = new Audio('audio/start.mp3');
+const finishSound = new Audio('audio/finish.mp3');
+
 function getCurrentSessionLength() {
   if (mode === 'Work Session') {
     return workTime;
@@ -87,6 +90,14 @@ function updateDisplay() {
   sessionCountElement.textContent = completedSessions;
   updateProgressBar();
   updateModeStyle();
+}
+
+// Play short one-time sounds, such as the start and finish reminders.
+function playReminderSound(audio) {
+  audio.currentTime = 0;
+  audio.play().catch(function () {
+    // Browsers can block audio until the user interacts with the page.
+  });
 }
 
 // Create a new background audio track for the selected sound.
@@ -142,7 +153,14 @@ function changeBackgroundSound(soundName) {
   }
 }
 
-function switchMode() {
+// End the current session, play the finish reminder, and prepare the next session.
+// The next session does not start automatically; the user clicks Start when ready.
+function finishSession() {
+  clearInterval(timerId);
+  timerId = null;
+  stopBackgroundSound();
+  playReminderSound(finishSound);
+
   if (mode === 'Work Session') {
     completedSessions += 1;
     mode = 'Break';
@@ -157,17 +175,17 @@ function switchMode() {
 
 function startTimer() {
   if (timerId !== null) {
-    playBackgroundSound();
     return;
   }
 
+  playReminderSound(startSound);
   playBackgroundSound();
 
   timerId = setInterval(function () {
     timeLeft -= 1;
 
     if (timeLeft === 0) {
-      switchMode();
+      finishSession();
     } else {
       updateDisplay();
     }
