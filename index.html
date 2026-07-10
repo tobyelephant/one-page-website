@@ -8,10 +8,13 @@
 </head>
 <body class="work-mode">
   <main class="app">
-    <h1>Pomodoro Timer</h1>
+    <div class="hero">
+      <p class="eyebrow">Calm focus timer</p>
+      <h1>Pomodoro Timer</h1>
+      <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
+    </div>
 
-    <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
-    <p id="timer" aria-live="polite">25:00</p>
+    <p id="timer" aria-live="polite"><span>25</span><span class="timer-colon">:</span><span>00</span></p>
 
     <div class="progress" aria-label="Session progress">
       <div id="progressBar"></div>
@@ -21,26 +24,41 @@
       <div class="setting-group">
         <p class="setting-title">Timer preset</p>
         <div class="choice-grid" aria-label="Timer preset choices">
-          <button class="choice-button active" type="button" data-preset="classic" aria-pressed="true">Classic <span>25 / 5</span></button>
-          <button class="choice-button" type="button" data-preset="deepFocus" aria-pressed="false">Deep Focus <span>50 / 10</span></button>
+          <button class="option-card active" type="button" data-preset="classic" aria-pressed="true">
+            <strong>Classic</strong>
+            <span>25 min focus / 5 min break</span>
+          </button>
+          <button class="option-card" type="button" data-preset="deepFocus" aria-pressed="false">
+            <strong>Deep Focus</strong>
+            <span>50 min focus / 10 min break</span>
+          </button>
         </div>
       </div>
 
-      <div class="setting-group">
+      <div class="setting-group audio-settings">
         <p class="setting-title">Background sound</p>
         <div class="sound-grid" aria-label="Background sound choices">
-          <button class="sound-button active" type="button" data-sound="none" aria-pressed="true">No Sound</button>
-          <button class="sound-button" type="button" data-sound="ocean" aria-pressed="false">Ocean</button>
-          <button class="sound-button" type="button" data-sound="forest" aria-pressed="false">Forest</button>
-          <button class="sound-button" type="button" data-sound="rain" aria-pressed="false">Rain</button>
+          <button class="option-card compact active" type="button" data-sound="none" aria-pressed="true">No Sound</button>
+          <button class="option-card compact" type="button" data-sound="ocean" aria-pressed="false">Ocean</button>
+          <button class="option-card compact" type="button" data-sound="forest" aria-pressed="false">Forest</button>
+          <button class="option-card compact" type="button" data-sound="rain" aria-pressed="false">Rain</button>
+        </div>
+
+        <div class="volume-row" aria-label="Volume choices">
+          <span class="volume-label">Volume:</span>
+          <div class="volume-buttons">
+            <button class="volume-button" type="button" data-volume="low" aria-pressed="false">Low</button>
+            <button class="volume-button active" type="button" data-volume="medium" aria-pressed="true">Medium</button>
+            <button class="volume-button" type="button" data-volume="high" aria-pressed="false">High</button>
+          </div>
         </div>
       </div>
     </section>
 
     <div class="controls" aria-label="Timer controls">
       <button class="action-button" id="startButton" type="button">Start</button>
-      <button class="action-button" id="pauseButton" type="button">Pause</button>
-      <button class="action-button" id="resetButton" type="button">Reset</button>
+      <button class="action-button secondary" id="pauseButton" type="button">Pause</button>
+      <button class="action-button secondary" id="resetButton" type="button">Reset</button>
     </div>
 
     <p class="session-count">Completed sessions: <span id="sessionCount">0</span></p>
