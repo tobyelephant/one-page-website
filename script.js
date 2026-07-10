@@ -26,6 +26,7 @@ const pauseButton = document.getElementById('pauseButton');
 const resetButton = document.getElementById('resetButton');
 const presetButtons = document.querySelectorAll('[data-preset]');
 const soundButtons = document.querySelectorAll('[data-sound]');
+const volumeButtons = document.querySelectorAll('[data-volume]');
 
 const backgroundSounds = {
   ocean: 'audio/ocean.mp3',
@@ -35,7 +36,14 @@ const backgroundSounds = {
 
 let selectedPreset = 'classic';
 let selectedSound = 'none';
+let selectedVolume = 'medium';
 let backgroundAudio = null;
+
+const volumeLevels = {
+  low: 0.25,
+  medium: 0.55,
+  high: 0.85,
+};
 
 const startSound = new Audio('audio/start.mp3');
 const finishSound = new Audio('audio/finish.mp3');
@@ -58,7 +66,23 @@ function updateModeStyle() {
   }
 }
 
-// Update which preset and sound buttons look selected.
+function getSelectedVolumeLevel() {
+  return volumeLevels[selectedVolume];
+}
+
+function applyVolumeToAudio(audio) {
+  if (audio !== null) {
+    audio.volume = getSelectedVolumeLevel();
+  }
+}
+
+function applySelectedVolume() {
+  applyVolumeToAudio(startSound);
+  applyVolumeToAudio(finishSound);
+  applyVolumeToAudio(backgroundAudio);
+}
+
+// Update which preset, sound, and volume buttons look selected.
 function updateActiveButtons() {
   presetButtons.forEach(function (button) {
     const isSelected = button.dataset.preset === selectedPreset;
@@ -68,6 +92,12 @@ function updateActiveButtons() {
 
   soundButtons.forEach(function (button) {
     const isSelected = button.dataset.sound === selectedSound;
+    button.classList.toggle('active', isSelected);
+    button.setAttribute('aria-pressed', String(isSelected));
+  });
+
+  volumeButtons.forEach(function (button) {
+    const isSelected = button.dataset.volume === selectedVolume;
     button.classList.toggle('active', isSelected);
     button.setAttribute('aria-pressed', String(isSelected));
   });
@@ -109,6 +139,7 @@ function loadBackgroundSound() {
 
   backgroundAudio = new Audio(backgroundSounds[selectedSound]);
   backgroundAudio.loop = true;
+  applyVolumeToAudio(backgroundAudio);
 }
 
 // Start the selected background sound while the timer is running.
@@ -142,6 +173,12 @@ function stopBackgroundSound() {
 }
 
 // If the timer is running, changing the selected sound starts the new sound right away.
+function changeVolume(volumeName) {
+  selectedVolume = volumeName;
+  applySelectedVolume();
+  updateActiveButtons();
+}
+
 function changeBackgroundSound(soundName) {
   selectedSound = soundName;
   updateActiveButtons();
@@ -238,5 +275,12 @@ soundButtons.forEach(function (button) {
   });
 });
 
+volumeButtons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    changeVolume(button.dataset.volume);
+  });
+});
+
+applySelectedVolume();
 updateActiveButtons();
 updateDisplay();
