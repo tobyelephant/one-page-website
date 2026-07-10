@@ -14,7 +14,7 @@
       <p class="mode-label">Current mode: <span id="mode">Work Session</span></p>
     </div>
 
-    <p id="timer" aria-live="polite">25:00</p>
+    <p id="timer" aria-live="polite"><span>25</span><span class="timer-colon">:</span><span>00</span></p>
 
     <div class="progress" aria-label="Session progress">
       <div id="progressBar"></div>
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div class="setting-group">
+      <div class="setting-group audio-settings">
         <p class="setting-title">Background sound</p>
         <div class="sound-grid" aria-label="Background sound choices">
           <button class="option-card compact active" type="button" data-sound="none" aria-pressed="true">No Sound</button>
@@ -43,14 +43,14 @@
           <button class="option-card compact" type="button" data-sound="forest" aria-pressed="false">Forest</button>
           <button class="option-card compact" type="button" data-sound="rain" aria-pressed="false">Rain</button>
         </div>
-      </div>
 
-      <div class="setting-group">
-        <p class="setting-title">Volume</p>
-        <div class="volume-grid" aria-label="Volume choices">
-          <button class="option-card compact" type="button" data-volume="low" aria-pressed="false">Low</button>
-          <button class="option-card compact active" type="button" data-volume="medium" aria-pressed="true">Medium</button>
-          <button class="option-card compact" type="button" data-volume="high" aria-pressed="false">High</button>
+        <div class="volume-row" aria-label="Volume choices">
+          <span class="volume-label">Volume:</span>
+          <div class="volume-buttons">
+            <button class="volume-button" type="button" data-volume="low" aria-pressed="false">Low</button>
+            <button class="volume-button active" type="button" data-volume="medium" aria-pressed="true">Medium</button>
+            <button class="volume-button" type="button" data-volume="high" aria-pressed="false">High</button>
+          </div>
         </div>
       </div>
     </section>

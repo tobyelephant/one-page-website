@@ -116,7 +116,7 @@ function updateDisplay() {
   const seconds = timeLeft % 60;
 
   modeElement.textContent = mode;
-  timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  timerElement.innerHTML = `<span>${minutes}</span><span class="timer-colon">:</span><span>${seconds.toString().padStart(2, '0')}</span>`;
   sessionCountElement.textContent = completedSessions;
   updateProgressBar();
   updateModeStyle();

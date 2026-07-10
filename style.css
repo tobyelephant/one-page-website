@@ -92,12 +92,32 @@ h1 {
 }
 
 #timer {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(0.18rem, 1vw, 0.45rem);
   margin: 1.4rem 0 1.15rem;
-  font-size: clamp(4.5rem, 19vw, 7.5rem);
-  font-weight: 850;
-  line-height: 1;
-  letter-spacing: -0.08em;
   color: #2e2525;
+  font-family: ui-monospace, "SFMono-Regular", "Roboto Mono", "Cascadia Mono", "Liberation Mono", monospace;
+  font-size: clamp(4.25rem, 17vw, 7rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.timer-colon {
+  color: #a45c4a;
+  font-weight: 500;
+  transform: translateY(-0.04em);
+}
+
+.break-mode #timer {
+  color: #20362b;
+}
+
+.break-mode .timer-colon {
+  color: #3f8e62;
 }
 
 .break-mode #timer {
@@ -179,9 +199,6 @@ h1 {
 .volume-grid,
 .controls {
   grid-template-columns: repeat(3, 1fr);
-}
-
-.controls {
   margin: 1.5rem 0 1rem;
 }
 
@@ -221,6 +238,72 @@ button:focus-visible {
   min-height: 52px;
   text-align: center;
   font-weight: 800;
+}
+
+.audio-settings {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.volume-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.65rem;
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(159, 63, 52, 0.1);
+  border-radius: 999px;
+}
+
+.volume-label {
+  color: #7c554d;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.volume-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.volume-button {
+  min-height: 34px;
+  padding: 0.4rem 0.75rem;
+  color: #7b5148;
+  background: rgba(255, 255, 255, 0.64);
+  border: 1px solid rgba(159, 63, 52, 0.14);
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 750;
+  box-shadow: none;
+}
+
+.volume-button.active {
+  color: #9f3f34;
+  background: #fde2d9;
+  border-color: rgba(159, 63, 52, 0.22);
+}
+
+.break-mode .volume-row {
+  border-color: rgba(47, 125, 85, 0.1);
+}
+
+.break-mode .volume-label,
+.break-mode .volume-button {
+  color: #3f6f55;
+}
+
+.break-mode .volume-button {
+  border-color: rgba(47, 125, 85, 0.14);
+}
+
+.break-mode .volume-button.active {
+  color: #2f7d55;
+  background: #d8f1df;
+  border-color: rgba(47, 125, 85, 0.22);
 }
 
 .option-card strong,
@@ -305,6 +388,17 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .volume-row {
+    align-items: stretch;
+    flex-direction: column;
+    border-radius: 18px;
+  }
+
+  .volume-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .option-card,
   .option-card.compact {
     min-height: 54px;
@@ -312,6 +406,6 @@ button:focus-visible {
   }
 
   #timer {
-    font-size: clamp(4rem, 22vw, 5.5rem);
+    font-size: clamp(3.7rem, 20vw, 5.2rem);
   }
 }
